@@ -1,24 +1,26 @@
 <template>
-  <div id="screen">
-    <div class="name">
-      <div v-if="selectedPokemon && selectedPokemon.stats" class="name__text">
-        {{ selectedPokemon.name }}
+  <div v-sticky>
+    <div id="screen">
+      <div class="name">
+        <div v-if="selectedPokemon && selectedPokemon.stats" class="name__text">
+          {{ selectedPokemon.name }}
+        </div>
+        <div v-else-if="isLoadingPokemons" class="name__text">
+          Loading...
+        </div>
+        <div v-else class="name__text">
+          Not Found
+        </div>
       </div>
-      <div v-else-if="isLoadingPokemons" class="name__text">
-        Loading...
-      </div>
-      <div v-else class="name__text">
-        Not Found
-      </div>
-    </div>
-    <div class="information">
-      <div v-if="selectedPokemon && selectedPokemon.stats" class="information__summary">
-        <Sprites />
-        <BasicInfo />
-      </div>
-      <div v-if="selectedPokemon && selectedPokemon.abilities" class="information__abilities">
-        Abilities
-        <Abilities />
+      <div class="information">
+        <div v-if="selectedPokemon && selectedPokemon.stats" class="information__summary">
+          <Sprites />
+          <BasicInfo />
+        </div>
+        <div v-if="selectedPokemon && selectedPokemon.abilities" class="information__abilities">
+          Abilities
+          <Abilities />
+        </div>
       </div>
     </div>
   </div>
@@ -26,6 +28,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import VueSticky from 'vue-sticky';
 
 import Sprites from './Sprites.vue';
 import BasicInfo from './BasicInfo.vue';
@@ -36,6 +39,9 @@ export default {
     Sprites,
     BasicInfo,
     Abilities,
+  },
+  directives: {
+    sticky: VueSticky,
   },
   computed: {
     ...mapState([
@@ -49,6 +55,8 @@ export default {
 <style lang="scss" scoped>
 #screen {
   margin-bottom: 30px;
+  padding: 30px 0;
+  background-color: #ed1c24;
 }
 
 .name {

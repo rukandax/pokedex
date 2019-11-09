@@ -4,7 +4,6 @@
       <div id="logo">Pokedex</div>
       <Screen />
       <Keyboard />
-      <Pagination />
     </div>
   </div>
 </template>
@@ -12,13 +11,11 @@
 <script>
 import Screen from './components/Screen.vue';
 import Keyboard from './components/Keyboard.vue';
-import Pagination from './components/Pagination.vue';
 
 export default {
   components: {
     Screen,
     Keyboard,
-    Pagination,
   },
   mounted() {
     document.title = 'Pokedex';

@@ -58,6 +58,35 @@ export default new Vuex.Store({
           state.isLoadingPokemons = false;
         });
     },
+    getMorePokemons({ state }) {
+      state.isLoadingPokemons = true;
+      state.pokemonsOffset += state.pokemonsLimit;
+
+      const params = {
+        limit: state.pokemonsLimit,
+        offset: state.pokemonsOffset,
+      };
+
+      this._vm.$pokedex.getPokemonsList(params)
+        .then(({ count, results }) => {
+          state.pokemonsTotal = count;
+          state.pokemons = state.pokemons.concat(results);
+
+          results.forEach((result) => {
+            this._vm.$pokedex.getPokemonByName(result.name)
+              .then((res) => {
+                if (!state.selectedPokemon) {
+                  state.selectedPokemon = res;
+                }
+
+                state.pokemonsDetail.push(res);
+              });
+          });
+        })
+        .finally(() => {
+          state.isLoadingPokemons = false;
+        });
+    },
     getSelectedPokemon({ state }, pokemonName) {
       state.selectedPokemon = {
         name: pokemonName,

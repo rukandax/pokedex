@@ -1,5 +1,9 @@
 <template>
-  <div id="keyboard">
+  <div
+    id="keyboard"
+    v-infinite-scroll="loadMorePokemons"
+    infinite-scroll-disabled="disableLoadMorePokemons"
+  >
     <template v-if="!pokemons.length">
       <div v-for="dummy in 6" :key="`dummy-${dummy}`" class="button">
         <img width="96" height="96">
@@ -24,14 +28,25 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex';
+import InfiniteScroll from 'vue-infinite-scroll';
 
 export default {
   computed: {
     ...mapState([
+      'isLoadingPokemons',
       'pokemons',
       'pokemonsDetail',
       'selectedPokemon',
+      'pokemonsOffset',
+      'pokemonsLimit',
+      'pokemonsTotal',
     ]),
+    disableLoadMorePokemons() {
+      return this.isLoadingPokemons;
+    },
+  },
+  directives: {
+    InfiniteScroll,
   },
   watch: {
     selectedPokemon: {
@@ -46,19 +61,27 @@ export default {
     },
   },
   mounted() {
+    this.getPokemons();
+
     if (this.$route.query.pokemon) {
       this.getSelectedPokemon(this.$route.query.pokemon);
     }
   },
   methods: {
     ...mapMutations([
+      'updatePokemonsOffset',
       'updateSelectedPokemon',
       'selectPokemon',
     ]),
     ...mapActions([
       'getPokemons',
+      'getMorePokemons',
       'getSelectedPokemon',
     ]),
+    loadMorePokemons() {
+      if (this.disableLoadMorePokemons) return;
+      this.getMorePokemons();
+    },
     isSelected(pokemonName) {
       return this.selectedPokemon && this.selectedPokemon.name === pokemonName;
     },
