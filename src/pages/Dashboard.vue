@@ -20,6 +20,9 @@ export default {
     Keyboard,
     Pagination,
   },
+  mounted() {
+    document.title = 'Pokedex';
+  },
 };
 </script>
 

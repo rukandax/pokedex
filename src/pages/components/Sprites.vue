@@ -3,7 +3,7 @@
     <div class="sprites__image">
       <img :src="pokemonImage" width="96" height="96">
       <div @click="toggleImagePosition" class="sprites__image__side">
-        <img src="/images/flip.png">
+        <img src="@/assets/images/flip.png">
         {{ imagePosition.toUpperCase() }}
       </div>
     </div>

@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    isLoadingPokemons: false,
     pokemonsLimit: 6,
     pokemonsOffset: null,
     pokemonsTotal: 0,
@@ -29,6 +30,7 @@ export default new Vuex.Store({
   },
   actions: {
     getPokemons({ state }) {
+      state.isLoadingPokemons = true;
       state.pokemons = [];
 
       const params = {
@@ -51,6 +53,9 @@ export default new Vuex.Store({
                 state.pokemonsDetail.push(res);
               });
           });
+        })
+        .finally(() => {
+          state.isLoadingPokemons = false;
         });
     },
     getSelectedPokemon({ state }, pokemonName) {

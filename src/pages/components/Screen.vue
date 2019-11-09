@@ -4,6 +4,9 @@
       <div v-if="selectedPokemon && selectedPokemon.stats" class="name__text">
         {{ selectedPokemon.name }}
       </div>
+      <div v-else-if="isLoadingPokemons" class="name__text">
+        Loading...
+      </div>
       <div v-else class="name__text">
         Not Found
       </div>
@@ -36,6 +39,7 @@ export default {
   },
   computed: {
     ...mapState([
+      'isLoadingPokemons',
       'selectedPokemon',
     ]),
   },
