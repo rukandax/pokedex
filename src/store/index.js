@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     isLoadingPokemons: false,
     pokemonsLimit: 6,
-    pokemonsOffset: null,
+    pokemonsOffset: 0,
     pokemonsTotal: 0,
     selectedPokemon: null,
     pokemons: [],
@@ -29,38 +29,8 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getPokemons({ state }) {
-      state.isLoadingPokemons = true;
-      state.pokemons = [];
-
-      const params = {
-        limit: state.pokemonsLimit,
-        offset: state.pokemonsOffset,
-      };
-
-      this._vm.$pokedex.getPokemonsList(params)
-        .then(({ count, results }) => {
-          state.pokemonsTotal = count;
-          state.pokemons = results;
-
-          results.forEach((result) => {
-            this._vm.$pokedex.getPokemonByName(result.name)
-              .then((res) => {
-                if (!state.selectedPokemon) {
-                  state.selectedPokemon = res;
-                }
-
-                state.pokemonsDetail.push(res);
-              });
-          });
-        })
-        .finally(() => {
-          state.isLoadingPokemons = false;
-        });
-    },
     getMorePokemons({ state }) {
       state.isLoadingPokemons = true;
-      state.pokemonsOffset += state.pokemonsLimit;
 
       const params = {
         limit: state.pokemonsLimit,
@@ -84,6 +54,7 @@ export default new Vuex.Store({
           });
         })
         .finally(() => {
+          state.pokemonsOffset += state.pokemonsLimit;
           state.isLoadingPokemons = false;
         });
     },

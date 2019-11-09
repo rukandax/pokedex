@@ -61,8 +61,6 @@ export default {
     },
   },
   mounted() {
-    this.getPokemons();
-
     if (this.$route.query.pokemon) {
       this.getSelectedPokemon(this.$route.query.pokemon);
     }
@@ -74,7 +72,6 @@ export default {
       'selectPokemon',
     ]),
     ...mapActions([
-      'getPokemons',
       'getMorePokemons',
       'getSelectedPokemon',
     ]),
