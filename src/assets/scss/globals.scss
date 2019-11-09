@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Pokemon';
+  src: url('../fonts/Pokemon\ Solid.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pokemon Hollow';
+  src: url('../fonts/Pokemon\ Hollow.ttf') format('truetype');
+}
+
+@import url('https://fonts.googleapis.com/css?family=McLaren&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'McLaren', cursive;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
