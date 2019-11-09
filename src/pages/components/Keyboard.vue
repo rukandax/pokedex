@@ -61,6 +61,8 @@ export default {
     },
   },
   mounted() {
+    this.getMorePokemons();
+
     if (this.$route.query.pokemon) {
       this.getSelectedPokemon(this.$route.query.pokemon);
     }
