@@ -51,10 +51,8 @@ export default {
   watch: {
     selectedPokemon: {
       handler() {
-        if (this.selectedPokemon.name !== this.$route.query.pokemon) {
-          const routeQuery = Object.assign({}, this.$route.query);
-          const query = Object.assign(routeQuery, { pokemon: this.selectedPokemon.name });
-          this.$router.push({ query });
+        if (this.selectedPokemon.name !== this.$route.params.pokemon) {
+          this.$router.push(`/${this.selectedPokemon.name}`);
         }
       },
       deep: true,
@@ -63,8 +61,8 @@ export default {
   mounted() {
     this.getMorePokemons();
 
-    if (this.$route.query.pokemon) {
-      this.getSelectedPokemon(this.$route.query.pokemon);
+    if (this.$route.params.pokemon) {
+      this.getSelectedPokemon(this.$route.params.pokemon);
     }
   },
   methods: {

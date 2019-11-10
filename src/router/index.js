@@ -3,10 +3,16 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */ '../pages/Dashboard.vue');
+
 const routes = [
   {
     path: '/',
-    component: () => import(/* webpackChunkName: "dashboard" */ '../pages/Dashboard.vue'),
+    component: Dashboard,
+  },
+  {
+    path: '/:pokemon',
+    component: Dashboard,
   },
 ];
 
